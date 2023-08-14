@@ -1,0 +1,10 @@
+name: Domain Search
+description: Filters searches using Domain information
+package: Custom
+
+type: module
+core_version_requirement: ^9.3 || ^10.0
+
+dependencies:
+  - drupal:search_api
+  - drupal:domain

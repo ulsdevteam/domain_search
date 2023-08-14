@@ -1,0 +1,5 @@
+services:
+  domain_search_subscriber:
+    class: '\domain_search\DomainSearchSubscriber'
+    tags:
+      - { name: 'event_subscriber' }
