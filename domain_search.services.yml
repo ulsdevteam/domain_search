@@ -1,5 +1,5 @@
 services:
   domain_search_subscriber:
-    class: '\domain_search\DomainSearchSubscriber'
+    class: Drupal\domain_search\EventSubscriber\DomainSearchSubscriber
     tags:
       - { name: 'event_subscriber' }

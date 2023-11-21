@@ -1,6 +1,6 @@
 <?php
 
-namespace domain_search;
+namespace Drupal\domain_search\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\search_api\Event\SearchApiEvents;
