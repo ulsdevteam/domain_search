@@ -1,0 +1,6 @@
+{
+    "name": "ulsdevteam/domain_search",
+    "description": "Module for filtering Solr search based on Domain",
+    "license": "MIT",
+    "type": "drupal-module"
+}
