@@ -1,0 +1,22 @@
+use Drupal\search_api\Entity\Index;
+use Drupal\search_api\Item\Field;
+
+/**
+Implements hook_install()
+*/
+function domain_search_install()
+{
+    create_domain_ids_search_api_field();
+}
+
+function create_domain_ids_search_api_field()
+{
+    $index = Index::load('default_solr_index');
+    if ($index->getField('domain_ids')) { return; }
+    $field = new Field($index, 'domain_ids');
+    $field->setType('string');
+    $field->setPropertyPath('domain_ids');
+    $field->setLabel('Domain IDs');
+    $index->addField($field);
+    $index->save();
+}
