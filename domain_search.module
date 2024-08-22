@@ -1,9 +1,12 @@
+<?php
+
+use Drupal\domain_access\DomainAccessManager;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\Item\Field;
 
 /**
-Implements hook_install()
-*/
+ *  Implements hook_install()
+ */
 function domain_search_install()
 {
     create_domain_ids_search_api_field();
@@ -12,11 +15,12 @@ function domain_search_install()
 function create_domain_ids_search_api_field()
 {
     $index = Index::load('default_solr_index');
-    if ($index->getField('domain_ids')) { return; }
-    $field = new Field($index, 'domain_ids');
+    if ($index->getField(DomainAccessManager::DOMAIN_ACCESS_FIELD)) { return; }
+    $field = new Field($index, DomainAccessManager::DOMAIN_ACCESS_FIELD);
     $field->setType('string');
-    $field->setPropertyPath('domain_ids');
+    $field->setDatasourceId('entity:node');
+    $field->setPropertyPath(DomainAccessManager::DOMAIN_ACCESS_FIELD);
     $field->setLabel('Domain IDs');
     $index->addField($field);
-    $index->save();
+    $res = $index->save();
 }
