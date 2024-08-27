@@ -11,20 +11,8 @@ use Drupal\search_api\Event\QueryPreExecuteEvent;
 class DomainSearchSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
     return [
-      // SearchApiEvents::INDEXING_ITEMS => 'indexingItems',
       SearchApiEvents::QUERY_PRE_EXECUTE => 'executingQuery'
     ];
-  }
-
-  // commented out because it appears this is happening automatically - needs investigation
-  public function indexingItems(IndexingItemsEvent $event) {
-    // foreach ($event->getItems() as $item) {
-    //   $original_object = $item->getOriginalObject(true);
-    //   $entity = $original_object->getEntity();
-    //   $domains = DomainAccessManager::getAccessValues($entity);
-    //   $field = $item->getField(DomainAccessManager::DOMAIN_ACCESS_FIELD);
-    //   $field->setValues(array_keys($domains));
-    // }
   }
 
   public function executingQuery(QueryPreExecuteEvent $event) {

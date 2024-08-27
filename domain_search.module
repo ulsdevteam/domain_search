@@ -14,13 +14,16 @@ function domain_search_install()
 
 function create_domain_ids_search_api_field()
 {
-    $index = Index::load('default_solr_index');
-    if ($index->getField(DomainAccessManager::DOMAIN_ACCESS_FIELD)) { return; }
-    $field = new Field($index, DomainAccessManager::DOMAIN_ACCESS_FIELD);
-    $field->setType('string');
-    $field->setDatasourceId('entity:node');
-    $field->setPropertyPath(DomainAccessManager::DOMAIN_ACCESS_FIELD);
-    $field->setLabel('Domain IDs');
-    $index->addField($field);
-    $res = $index->save();
+    $indexes = \Drupal::entityTypeManager()->getStorage('search_api_index')->loadMultiple();
+    foreach ($indexes as $index) {
+        if (!in_array('entity:node', $index->getDatasourceIds())) { continue; }
+        if ($index->getField(DomainAccessManager::DOMAIN_ACCESS_FIELD)) { continue; }
+        $field = new Field($index, DomainAccessManager::DOMAIN_ACCESS_FIELD);
+        $field->setType('string');
+        $field->setDatasourceId('entity:node');
+        $field->setPropertyPath(DomainAccessManager::DOMAIN_ACCESS_FIELD);
+        $field->setLabel('Domain IDs');
+        $index->addField($field);
+        $index->save();
+    }
 }
