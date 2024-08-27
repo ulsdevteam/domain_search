@@ -16,10 +16,12 @@ class DomainSearchSubscriber implements EventSubscriberInterface {
   }
 
   public function executingQuery(QueryPreExecuteEvent $event) {
-    $domain_negotiator = \Drupal::service('domain.negotiator');
-    $domain_id = $domain_negotiator->getActiveId();
     $query = $event->getQuery();
-    $conditions = $query->createAndAddConditionGroup();
-    $conditions->addCondition(DomainAccessManager::DOMAIN_ACCESS_FIELD, $domain_id, 'IN');
+    if ($query->getIndex()->getField(DomainAccessManager::DOMAIN_ACCESS_FIELD)) {
+      $domain_negotiator = \Drupal::service('domain.negotiator');
+      $domain_id = $domain_negotiator->getActiveId();
+      $conditions = $query->createAndAddConditionGroup();
+      $conditions->addCondition(DomainAccessManager::DOMAIN_ACCESS_FIELD, $domain_id, 'IN');
+    }
   }
 }
